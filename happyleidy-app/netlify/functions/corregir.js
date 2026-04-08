@@ -3,11 +3,13 @@ exports.handler = async function(event) {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+
   const response = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'x-api-key': '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',
+      'x-api-key': apiKey,
       'anthropic-version': '2023-06-01'
     },
     body: event.body
