@@ -322,7 +322,7 @@ async function gen(){
   var pl={cli:cli,fec:fec,ref:ref,nota:nota,svcs:svcs.map(function(s){return{name:s.name,price:s.price,desc:s.desc};})};
   var cor=pl;
   try{
-    var res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':'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','anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:3000,messages:[{role:'user',content:'You are a Spanish spell checker. Fix ONLY spelling and accent errors in the text values of this JSON. Do NOT change words, meaning, or style. Return ONLY valid JSON with no extra text, no markdown, no explanation. Input JSON: '+JSON.stringify(pl)}]})});
+    var res=await fetch('/.netlify/functions/corregir',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:3000,messages:[{role:'user',content:'You are a Spanish spell checker. Fix ONLY spelling and accent errors in the text values of this JSON. Do NOT change words, meaning, or style. Return ONLY valid JSON with no extra text, no markdown, no explanation. Input JSON: '+JSON.stringify(pl)}]})});
     var data=await res.json();
     var txt=(data.content||[]).filter(function(b){return b.type==='text';}).map(function(b){return b.text;}).join('');
     txt=txt.replace(/```json|```/g,'').trim();
